@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cómo construir, adaptar o mejorar rúbricas para evaluación en Educación Médica</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --uva: #9a0040; --uva-light: #c6004c; --uva-dark: #6d002c;
+    --sec: #0d2d6b; --sec-light: #1a4a9e; --sec-pale: #e8edf7;
+    --uva-pale: #fce8ef; --gray1: #f7f7f8; --gray2: #e5e5ea; --gray3: #aeaeb2;
+    --text: #111118; --text2: #3a3a4a;
+    --shadow: 0 2px 16px rgba(17,17,24,0.09); --shadow-lg: 0 8px 32px rgba(17,17,24,0.13);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',sans-serif;color:var(--text);background:#fff;line-height:1.8;-webkit-font-smoothing:antialiased}
+
+  header{background:var(--uva);position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(0,0,0,0.22)}
+  .header-top{display:flex;align-items:center;justify-content:space-between;padding:13px 36px;gap:16px}
+  .logo-area{display:flex;align-items:center;gap:14px}
+  .logo-badge{width:46px;height:46px;background:rgba(255,255,255,0.13);border:2px solid rgba(255,255,255,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .logo-text .univ{font-size:10px;text-transform:uppercase;letter-spacing:2.5px;color:rgba(255,255,255,0.75);font-weight:500}
+  .logo-text .fac{font-size:15px;font-weight:700;color:#fff}
+  .header-title{font-size:12px;color:rgba(255,255,255,0.8);text-align:right;max-width:280px;line-height:1.45}
+  nav{background:rgba(0,0,0,0.25);overflow-x:auto;white-space:nowrap;scrollbar-width:none}
+  nav::-webkit-scrollbar{display:none}
+  nav ul{list-style:none;display:inline-flex;padding:0 20px}
+  nav ul li a{display:block;padding:9px 13px;color:rgba(255,255,255,0.82);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.6px;text-transform:uppercase;border-bottom:2px solid transparent;transition:color 0.18s}
+  nav ul li a:hover{color:#fff;border-bottom-color:rgba(255,255,255,0.5)}
+
+  .hero{background:linear-gradient(150deg,#6d002c 0%,#9a0040 45%,#1a1a3e 100%);color:white;padding:80px 32px 70px;text-align:center;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(13,45,107,0.2) 0%,transparent 65%);pointer-events:none}
+  .hero-tag{display:inline-block;background:var(--sec);color:white;font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:2.5px;padding:5px 16px;border-radius:20px;margin-bottom:24px}
+  .hero h1{font-family:'Inter',sans-serif;font-size:clamp(22px,4vw,42px);font-weight:800;line-height:1.18;margin-bottom:18px;max-width:820px;margin-left:auto;margin-right:auto}
+  .hero-meta{font-size:12px;opacity:0.65;font-weight:500;display:flex;justify-content:center;gap:6px;flex-wrap:wrap;text-transform:uppercase;letter-spacing:0.8px}
+  .hero-meta span{padding:3px 10px;background:rgba(255,255,255,0.1);border-radius:12px}
+
+  .container{max-width:1400px;margin:0 auto;padding:0 clamp(24px,5vw,80px)}
+
+  section{padding:56px 0 36px 32px;border-bottom:1px solid var(--gray2);border-left:4px solid var(--gray2);margin-left:-32px;transition:border-left-color 0.25s;scroll-margin-top:90px}
+  section:hover{border-left-color:var(--uva)}
+  section:last-of-type{border-bottom:none}
+  .section-num{font-size:48px;color:var(--gray2);font-weight:800;letter-spacing:-2px;line-height:1;margin-bottom:4px}
+  .section-intro .section-num{font-size:10.5px;color:var(--sec);letter-spacing:3px;font-weight:700;text-transform:uppercase;margin-bottom:10px}
+
+  h2{font-family:'Inter',sans-serif;font-size:clamp(20px,3.5vw,28px);color:var(--uva);margin-bottom:6px;line-height:1.15;font-weight:700}
+  .divider{width:40px;height:3px;background:var(--sec);margin:14px 0 28px;border-radius:2px}
+  h3{font-size:clamp(15px,2.2vw,18px);color:var(--uva-dark);margin:32px 0 12px;font-weight:700}
+  h4{font-size:15px;color:var(--text);margin:20px 0 8px;font-weight:600}
+  p{margin-bottom:18px;color:var(--text2);font-size:15.5px}
+  p:last-child{margin-bottom:0}
+  strong{color:var(--text);font-weight:600}
+
+  .callout{border-left:4px solid var(--sec);background:var(--sec-pale);padding:20px 24px;margin:28px 0;border-radius:0 10px 10px 0}
+  .callout.warning{border-left-color:var(--uva-light);background:var(--uva-pale)}
+  .callout.dark{border-left-color:var(--uva-dark);background:var(--gray1)}
+  .callout-title{font-size:13px;text-transform:uppercase;letter-spacing:1.5px;color:var(--sec);font-weight:700;margin-bottom:14px}
+  .callout.warning .callout-title{color:var(--uva-light)}
+  .callout.dark .callout-title{color:var(--uva-dark)}
+  .callout ul{list-style:none;padding:0}
+  .callout ul li{padding:5px 0 5px 22px;position:relative;font-size:14.5px;color:var(--text2)}
+  .callout ul li::before{content:"▸";position:absolute;left:0;color:var(--sec);font-size:11px;top:7px}
+  .callout.warning ul li::before{color:var(--uva-light)}
+  .callout.dark ul li::before{color:var(--uva-dark)}
+
+  .plantilla-list{list-style:none;padding:0;margin:0;border-radius:8px;overflow:hidden}
+  .plantilla-list li{display:flex;align-items:baseline;gap:14px;padding:11px 16px;font-size:14.5px;color:var(--text2)}
+  .plantilla-list li:nth-child(odd){background:#fff}
+  .plantilla-list li:nth-child(even){background:var(--gray1)}
+  .plantilla-list li .num{font-size:18px;font-weight:800;color:var(--uva);min-width:28px;line-height:1}
+
+  .table-wrap{overflow-x:auto;margin:24px 0;border-radius:10px;box-shadow:var(--shadow)}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:560px}
+  thead tr{background:var(--uva);color:white}
+  thead th{padding:13px 15px;text-align:left;font-size:12px;font-weight:600}
+  tbody tr:nth-child(even){background:var(--gray1)}
+  tbody tr:hover{background:var(--uva-pale);transition:background 0.15s}
+  tbody td{padding:13px 15px;vertical-align:top;border-bottom:1px solid var(--gray2);color:var(--text2);line-height:1.55}
+  tbody td:first-child{font-weight:600;color:var(--uva-dark)}
+  .level-1{background:#fff0f4!important} .level-2{background:#fffbec!important}
+  .level-3{background:#f0f4ff!important} .level-4{background:#e8edf7!important}
+  .level-badge{display:inline-block;padding:2px 10px;border-radius:10px;font-size:10.5px;font-weight:700;white-space:nowrap}
+  .b1{background:#fce4ec;color:#880e4f} .b2{background:#fff8e1;color:#c27000}
+  .b3{background:#e3eaf8;color:#0d2d6b} .b4{background:#dce3f5;color:#061a45}
+  .rubric-table thead th:first-child{width:130px}
+  .rubric-table thead th:nth-child(2){width:55px}
+
+  .steps{margin:28px 0}
+  .step{display:flex;gap:22px;margin-bottom:30px;align-items:flex-start}
+  .step-num{width:42px;height:42px;min-width:42px;background:var(--uva);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;margin-top:2px;box-shadow:0 4px 12px rgba(154,0,64,0.25)}
+  .step-body h4{margin-top:0;color:var(--uva-dark);font-size:16px}
+
+  .type-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:18px;margin:24px 0}
+  .type-card{border:1.5px solid var(--gray2);border-radius:12px;padding:24px;transition:border-color 0.2s,box-shadow 0.2s,transform 0.2s;background:#fff}
+  .type-card:hover{border-color:var(--sec-light);box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+  .type-card .type-icon{font-size:26px;margin-bottom:12px}
+  .type-card h4{margin-top:0;color:var(--uva);font-size:16px;margin-bottom:9px}
+  .type-card p{font-size:14px;margin-bottom:12px}
+  .type-card .tag{display:inline-block;background:var(--sec-pale);color:var(--sec);font-size:10.5px;padding:3px 10px;border-radius:10px;font-weight:700}
+
+  .prompt-box{background:#12121f;color:#dde1f0;border-radius:12px;padding:24px 26px;margin:20px 0;font-family:'SF Mono','Fira Code','Courier New',monospace;font-size:13px;line-height:1.75;overflow-x:auto;box-shadow:var(--shadow-lg)}
+  .prompt-box .prompt-label{font-family:'Inter',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:2px;color:#6a9fd8;margin-bottom:14px;display:block;font-weight:600}
+  .prompt-box .placeholder{color:#f08a9c}
+
+  .keypoints{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:14px;margin:24px 0}
+  .keypoint{background:var(--gray1);border-left:3px solid var(--uva);padding:16px 18px;border-radius:0 10px 10px 0;font-size:14.5px;color:var(--text2);line-height:1.6;transition:box-shadow 0.18s}
+  .keypoint:hover{box-shadow:var(--shadow)}
+  .keypoint::before{content:"✦ ";color:var(--uva);font-weight:700}
+
+  .checklist{list-style:none;padding:0;margin:16px 0}
+  .checklist li{padding:9px 9px 9px 36px;position:relative;border-bottom:1px solid var(--gray2);font-size:14.5px;color:var(--text2)}
+  .checklist li::before{content:"☐";position:absolute;left:8px;color:var(--sec);font-size:15px}
+
+  .ref-list{list-style:none;padding:0}
+  .ref-list li{padding:11px 0 11px 22px;border-bottom:1px solid var(--gray2);font-size:14px;color:var(--text2);position:relative;line-height:1.55}
+  .ref-list li::before{content:"—";position:absolute;left:0;color:var(--gray3)}
+
+  .back-top{text-align:center;padding:28px 0 10px}
+  .back-top a{display:inline-block;color:var(--uva);font-size:12.5px;font-weight:600;text-decoration:none;border:1.5px solid var(--uva);padding:8px 22px;border-radius:20px;transition:background 0.18s,color 0.18s}
+  .back-top a:hover{background:var(--uva);color:white}
+
+  footer{background:#0e0e1a;color:rgba(255,255,255,0.65);text-align:center;padding:36px 24px;font-size:13px;line-height:1.9;margin-top:40px}
+  footer strong{color:white}
+  mark{background:#fff3cd;padding:1px 5px;border-radius:3px;color:var(--text)}
+  code{background:var(--gray1);border:1px solid var(--gray2);padding:2px 7px;border-radius:5px;font-size:13px}
+
+  @media(max-width:640px){
+    .header-top{padding:11px 16px} .header-title{display:none}
+    .hero{padding:48px 16px 42px}
+    section{padding:44px 0 28px 20px;margin-left:-20px}
+    .section-num{font-size:36px}
+  }
+</style>
+</head>
+<body>
+
+<header id="top">
+  <div class="header-top">
+    <div class="logo-area">
+      <div class="logo-badge">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="20" y="27" text-anchor="middle" font-size="16" font-weight="bold" fill="white" font-family="'Franklin Gothic Book','Franklin Gothic Medium','ITC Franklin Gothic','Arial Narrow',Arial,sans-serif">UVa</text>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <div class="univ">Universidad de Valladolid</div>
+        <div class="fac">Facultad de Medicina</div>
+      </div>
+    </div>
+    <div class="header-title">Guía para docentes clínicos y tutores · Evaluación por competencias</div>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="#intro">Introducción</a></li>
+      <li><a href="#que-es">¿Qué es?</a></li>
+      <li><a href="#sistema">En el sistema</a></li>
+      <li><a href="#para-que">Aporte</a></li>
+      <li><a href="#competencias">Competencias</a></li>
+      <li><a href="#tipos">Tipos</a></li>
+      <li><a href="#puntuacion">Puntuación</a></li>
+      <li><a href="#construccion">Construcción</a></li>
+      <li><a href="#calidad">Calidad</a></li>
+      <li><a href="#ventajas">Ventajas</a></li>
+      <li><a href="#ia">IA generativa</a></li>
+      <li><a href="#prompts">Prompts</a></li>
+      <li><a href="#claves">Puntos clave</a></li>
+      <li><a href="#ejemplos">Anexo</a></li>
+      <li><a href="#refs">Referencias</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="hero">
+  <div class="hero-tag">Guía docente · Febrero 2026</div>
+  <h1>Cómo construir, adaptar o mejorar rúbricas para evaluación en Educación Médica</h1>
+  <div class="hero-meta">
+    <span>Docentes clínicos</span>
+    <span>Tutores de grado y residencia</span>
+    <span>Coordinadores de asignatura</span>
+    <span>Evaluación por competencias</span>
+  </div>
+  <div style="margin-top:28px;font-size:11.5px;color:rgba(255,255,255,0.6);letter-spacing:0.5px;line-height:1.7">
+    Parte del proyecto de innovación docente<br>
+    <span style="color:rgba(255,255,255,0.9);font-weight:600;">EDUMed EvalUVa 4.0 · Inteligencia artificial para transformar la evaluación docente en educación médica (2025–2026)</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- INTRODUCCIÓN -->
+<section id="intro" class="section-intro">
+  <div class="section-num">Introducción</div>
+  <h2>El reto de evaluar competencias complejas</h2>
+  <div class="divider"></div>
+  <p>La evaluación en medicina nunca ha sido sencilla. Valorar si un estudiante de grado sabe comunicar malas noticias, si un residente de primer año aplica asepsia correctamente o si un MIR es capaz de razonar ante la incertidumbre diagnóstica requiere algo más que intuición experta. Requiere criterios claros, compartidos y aplicados de forma consistente.</p>
+  <p>Durante décadas, la educación médica ha dependido de exámenes tipo test para medir conocimiento y de impresiones globales para valorar el desempeño clínico. Sin embargo, como señalan Shumway y Harden (2003), la tendencia actual exige moverse desde la evaluación del conocimiento hacia la evaluación de <strong>competencias complejas</strong> como el juicio clínico, el profesionalismo o la comunicación, y eso requiere instrumentos más sofisticados.</p>
+  <p>Las rúbricas son una respuesta efectiva y bien fundamentada a ese reto. La investigación acumulada —sintetizada entre otros por Jonsson y Svingby (2007) en su revisión de 75 estudios— muestra que las rúbricas analíticas, específicas por tarea y complementadas con ejemplos ancla, mejoran la consistencia de la puntuación, facilitan un juicio válido del desempeño complejo y promueven el aprendizaje.</p>
+  <p>Esta guía está dirigida a profesorado clínico, tutores de estudiantes de grado y residentes, y coordinadores de asignaturas o rotaciones.</p>
+</section>
+
+<!-- 01 -->
+<section id="que-es">
+  <div class="section-num">01</div>
+  <h2>¿Qué es una rúbrica?</h2>
+  <div class="divider"></div>
+  <p>Una rúbrica es una herramienta de evaluación estructurada que describe, de forma explícita y anticipada, <strong>qué se va a valorar</strong> y <strong>qué nivel de desempeño</strong> corresponde a cada puntuación o descriptor. Funciona como una matriz que combina criterios de calidad con niveles de logro, haciendo visible y comunicable aquello que en la evaluación clínica tradicional permanece implícito en la cabeza del evaluador.</p>
+  <h3>Los tres elementos esenciales de una rúbrica</h3>
+  <div class="type-grid">
+    <div class="type-card"><div class="type-icon">🎯</div><h4>Criterios</h4><p>Las dimensiones del desempeño a evaluar: aplicación de asepsia, comunicación con el paciente, razonamiento diagnóstico.</p><span class="tag">El qué</span></div>
+    <div class="type-card"><div class="type-icon">📊</div><h4>Niveles</h4><p>Los grados de calidad posibles para cada criterio, habitualmente entre tres y cinco, desde insuficiente hasta excelente.</p><span class="tag">El cuánto</span></div>
+    <div class="type-card"><div class="type-icon">🔍</div><h4>Descriptores conductuales</h4><p>Las frases concretas que definen qué aspecto tiene el desempeño en cada nivel. Son el núcleo diferencial de la rúbrica.</p><span class="tag">El cómo se ve</span></div>
+  </div>
+  <div class="callout">
+    <div class="callout-title">Ejemplo de contraste: descriptores</div>
+    <ul>
+      <li><strong>Observable y accionable:</strong> "Aplica técnica aséptica con lavado de manos, guantes y desinfección de la piel del paciente con tiempo y técnica adecuados."</li>
+      <li><strong>Inútil para la evaluación:</strong> "Demuestra competencia adecuada."</li>
+    </ul>
+  </div>
+  <div class="callout dark">
+    <div class="callout-title">En la práctica</div>
+    <ul>
+      <li>Una rúbrica no es una lista de lo que el estudiante debe saber; es una descripción de cómo actúa en cada nivel.</li>
+      <li>El criterio define el qué; el descriptor define el cómo se ve en la práctica.</li>
+      <li>Sin anclajes conductuales, dos evaluadores aplicarán la misma rúbrica de forma diferente.</li>
+      <li>El número ideal de criterios suele estar entre tres y ocho, según la complejidad de la tarea.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 02 -->
+<section id="sistema">
+  <div class="section-num">02</div>
+  <h2>¿Cómo funcionan las rúbricas en el sistema de evaluación médica?</h2>
+  <div class="divider"></div>
+  <p>Las rúbricas no son un anexo al final de la evaluación: forman parte del aprendizaje porque hacen explícitos los criterios de calidad y los niveles de desempeño. Por eso se integran en sistemas amplios como la <strong>OSCE/ECOE</strong> (Objective Structured Clinical Examination / Evaluación Clínica Objetiva Estructurada), la observación en el entorno real con <strong>mini-CEX</strong> (Mini-Clinical Evaluation Exercise), y también en marcos como las <strong>EPAs</strong> (Entrustable Professional Activities / Actividades Profesionales Confiables) o el <strong>portafolio</strong>, donde ayudan a definir niveles de confianza y a organizar evidencias de progreso. En todos los casos cumplen el mismo papel: traducir competencias complejas en conductas observables y niveles descritos con claridad para guiar la observación y la retroalimentación.</p>
+  <p>Las rúbricas pueden jugar un papel de puente entre evaluar y aprender, ya que convierten objetivos o competencias teóricas en criterios visibles. Según el tipo de evaluación, su papel con respecto al aprendizaje cambia:</p>
+  <div class="type-grid">
+    <div class="type-card"><div class="type-icon">🎓</div><h4>Evaluación DEL aprendizaje</h4><p>Comprueba qué se aprendió y qué no al final de una actividad o curso. La rúbrica sirve para calificar con criterios claros y comparables, y sus resultados son defendibles ante el estudiante y la institución, documentando las decisiones de progresión.</p><span class="tag">Sumativa</span></div>
+    <div class="type-card"><div class="type-icon">🔁</div><h4>Evaluación PARA EL aprendizaje</h4><p>Detecta qué falta por mejorar mientras se aprende. La rúbrica guía la observación del tutor durante la actividad clínica y orienta el feedback hacia aspectos específicos y accionables: qué está bien, qué falta y cómo subir de nivel.</p><span class="tag">Formativa</span></div>
+    <div class="type-card"><div class="type-icon">🧭</div><h4>Evaluación COMO aprendizaje</h4><p>El alumno aprende evaluando mediante auto y coevaluación. La rúbrica actúa como "mapa" de calidad para autorregularse y valorar a otros con criterios compartidos, antes incluso de la evaluación formal.</p><span class="tag">Metacognitiva</span></div>
+  </div>
+  <h3>Rúbricas en el OSCE/ECOE</h3>
+  <p>El OSCE/ECOE es el formato de evaluación más exigente desde el punto de vista logístico y psicométrico de la educación médica. Su fortaleza reside en la estandarización: todos los estudiantes pasan por las mismas estaciones, con los mismos escenarios y, en teoría, con los mismos criterios. Sin rúbricas bien construidas y calibradas, esa estandarización es solo aparente.</p>
+  <div class="callout dark">
+    <div class="callout-title">En la práctica · OSCE/ECOE</div>
+    <ul>
+      <li>La rúbrica guía la observación: el evaluador sabe qué mirar, en qué orden y con qué criterio.</li>
+      <li>Diseña criterios específicos para cada estación; una rúbrica de comunicación no es transferible a una estación de técnica procedimental.</li>
+      <li>Limita los criterios a los que puedas observar con fiabilidad en el tiempo de la estación (3–7 suele ser suficiente).</li>
+      <li>Añade siempre un criterio de valoración global al final que capture la coherencia e integración del conjunto.</li>
+      <li>Guarda las hojas de evaluación: son la documentación que justifica las decisiones sumativas ante posibles reclamaciones.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 03 -->
+<section id="para-que">
+  <div class="section-num">03</div>
+  <h2>¿Qué aportan?</h2>
+  <div class="divider"></div>
+  <p>Las rúbricas aportan valor en seis planos: transparencia, feedback, progresión, estandarización, toma de decisiones y alfabetización evaluadora del estudiante.</p>
+  <h3>Transparencia y justicia percibida</h3>
+  <p>Cuando el estudiante conoce de antemano los criterios con los que será evaluado, la evaluación deja de ser un juicio opaco del experto y se convierte en una herramienta de aprendizaje. Jonsson (2014) demuestra que los estudiantes que acceden a la rúbrica antes de la tarea mejoran su rendimiento y perciben el proceso como más justo.</p>
+  <h3>Feedback específico y accionable</h3>
+  <p>Una rúbrica analítica permite señalar exactamente en qué criterio y nivel se encuentra el estudiante, y qué debería hacer de forma diferente. Los descriptores conductuales producen feedback que el estudiante puede convertir en acción concreta (Pitt y Winstone, 2023).</p>
+  <h3>Progresión del aprendizaje</h3>
+  <p>Las rúbricas evolutivas permiten situar al estudiante en su trayectoria de desarrollo competencial a lo largo del tiempo. Al describir explícitamente los hitos de progresión —desde novato hasta experto—, ofrecen al estudiante y al tutor una imagen compartida de hacia dónde se dirige el aprendizaje y cuál es el siguiente paso concreto.</p>
+  <h3>Estandarización entre evaluadores</h3>
+  <p>En contextos donde múltiples tutores evalúan a múltiples estudiantes en distintos entornos clínicos, la variabilidad del evaluador es una de las mayores amenazas a la validez. Las rúbricas con descriptores conductuales reducen esa variabilidad al proporcionar un marco de referencia común (Pangaro y ten Cate, 2013).</p>
+  <h3>Toma de decisiones fundamentada</h3>
+  <p>En evaluaciones de alto impacto —certificación de competencias, decisiones de progresión, calificación del OSCE—, las rúbricas proporcionan documentación explícita y defendible de los criterios utilizados. Esto protege tanto al estudiante como a la institución (Norcini et al., 2011).</p>
+  <h3>Alfabetización evaluadora del estudiante</h3>
+  <p>Un aporte relevante de la investigación reciente es el concepto de <em>student feedback literacy</em> (Carless y Boud, 2018; Pitt y Winstone, 2023): la capacidad del estudiante de comprender los criterios de calidad, interpretar el feedback y usarlo para mejorar su aprendizaje. Las rúbricas compartidas antes de la evaluación son una de las estrategias más eficaces para desarrollar esa alfabetización.</p>
+  <div class="callout warning">
+    <div class="callout-title">Cuándo NO usar rúbricas</div>
+    <ul>
+      <li>Cuando la tarea es tan abierta y creativa que no puede describirse en niveles predefinidos.</li>
+      <li>Cuando el tiempo de diseño no puede justificarse por el peso de la evaluación.</li>
+      <li>En esos casos, una escala global con uno o dos anclajes y espacio para comentario narrativo puede ser más eficiente.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 04 -->
+<section id="competencias">
+  <div class="section-num">04</div>
+  <h2>Competencias evaluables con rúbricas en medicina</h2>
+  <div class="divider"></div>
+  <p>En medicina, las rúbricas permiten evaluar de forma estructurada tanto competencias simples como complejas, porque traducen lo que se espera del estudiante en criterios observables y niveles de desempeño. Este apartado resume qué competencias se prestan mejor a ser evaluadas con rúbricas, desde habilidades técnicas y comunicativas hasta tareas clínicas integradas en contextos reales o simulados o competencias transversales como el trabajo en equipo o la gestión del tiempo.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Área</th><th>Competencia</th><th>Qué evalúa la rúbrica</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="3">Habilidades clínicas</td><td>Historia clínica</td><td>Recogida de información relevante, organización cronológica, identificación de síntomas clave y documentación</td></tr>
+        <tr><td>Exploración física</td><td>Técnica, orden sistemático, delicadeza con el paciente e identificación de hallazgos</td></tr>
+        <tr><td>Procedimientos técnicos</td><td>Preparación, técnica, seguridad y manejo de complicaciones</td></tr>
+        <tr><td rowspan="4">Habilidades de comunicación</td><td>Presentación de casos</td><td>Estructura, claridad, síntesis de información relevante y capacidad de responder preguntas</td></tr>
+        <tr><td>Comunicación de malas noticias</td><td>Empatía, uso de lenguaje apropiado, manejo del silencio y apoyo emocional</td></tr>
+        <tr><td>Consentimiento informado</td><td>Explicación de riesgos, beneficios, alternativas y verificación de la comprensión del paciente</td></tr>
+        <tr><td>Comunicación en equipo</td><td>Handoff entre turnos, presentación en sesiones multidisciplinares</td></tr>
+        <tr><td rowspan="3">Trabajo de investigación</td><td>TFG / TFM</td><td>Planteamiento del problema, metodología, análisis de datos, interpretación de resultados y calidad de la redacción</td></tr>
+        <tr><td>Revisiones bibliográficas</td><td>Estrategia de búsqueda, selección crítica de fuentes, síntesis de evidencia y aplicabilidad clínica</td></tr>
+        <tr><td>Pósteres y comunicaciones</td><td>Diseño visual, claridad del mensaje, rigor metodológico y capacidad de defensa</td></tr>
+        <tr><td rowspan="3">Simulación clínica</td><td>Escenarios de emergencias</td><td>Priorización, toma de decisiones bajo presión, aplicación de protocolos</td></tr>
+        <tr><td>Trabajo en equipo</td><td>Comunicación efectiva, delegación de tareas, solicitud de ayuda, gestión de conflictos y liderazgo</td></tr>
+        <tr><td>Manejo de recursos</td><td>Uso eficiente de material, reconocimiento de limitaciones y adaptación al contexto</td></tr>
+        <tr><td rowspan="3">Profesionalismo y ética</td><td>Razonamiento ético</td><td>Identificación de dilemas, análisis de principios éticos, consideración de perspectivas múltiples y justificación de decisiones</td></tr>
+        <tr><td>Actitud profesional</td><td>Puntualidad, respeto, confidencialidad, responsabilidad y trabajo en equipo durante rotaciones</td></tr>
+        <tr><td>Autoevaluación</td><td>Reflexión sobre el propio desempeño e identificación de áreas de mejora</td></tr>
+        <tr><td rowspan="3">Otras competencias</td><td>Razonamiento clínico</td><td>Generación de hipótesis diagnósticas, priorización de diagnósticos diferenciales y solicitud racional de pruebas</td></tr>
+        <tr><td>Educación al paciente</td><td>Adaptación del lenguaje, uso de recursos educativos, verificación de comprensión y motivación para el cambio</td></tr>
+        <tr><td>Gestión del tiempo</td><td>Eficiencia en consultas, priorización de tareas y cumplimiento de plazos en rotaciones</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 05 -->
+<section id="tipos">
+  <div class="section-num">05</div>
+  <h2>Tipos de rúbricas</h2>
+  <div class="divider"></div>
+  <h3>Rúbricas analíticas</h3>
+  <p>Evalúan cada componente del desempeño por separado, proporcionando puntuaciones individuales para cada criterio. Son las más utilizadas en medicina porque permiten identificar con precisión fortalezas y debilidades específicas, facilitan la retroalimentación detallada al estudiante, son ideales para evaluar competencias complejas con múltiples dimensiones y proporcionan información valiosa para el plan de mejora individualizado.</p>
+  <div class="callout dark">
+    <div class="callout-title">Ejemplo · Historia clínica</div>
+    <ul>
+      <li>Se puntúa por separado: obtención de datos, organización temporal, identificación de síntomas clave, comunicación con el paciente y documentación.</li>
+    </ul>
+  </div>
+
+  <h3>Rúbricas globales, comprehensivas u holísticas</h3>
+  <p>Proporcionan una valoración general del desempeño sin desglosar componentes individuales. Utilizan descriptores que caracterizan diferentes niveles de logro global. Permiten calificar más rápidamente y funcionan bien para evaluaciones formativas rápidas, aunque la retroalimentación resultante es menos específica que la de una rúbrica analítica.</p>
+  <div class="callout dark">
+    <div class="callout-title">Ejemplo · Presentación de caso clínico</div>
+    <ul>
+      <li>Se da una puntuación global considerando el conjunto: contenido, estructura, claridad y capacidad de respuesta.</li>
+    </ul>
+  </div>
+
+  <h3>Rúbricas evolutivas o de desarrollo</h3>
+  <p>Se centran en las etapas o hitos en la progresión hacia la competencia, describiendo trayectorias de desarrollo a lo largo del tiempo. Son especialmente útiles en formación médica porque reflejan el proceso natural de aprendizaje progresivo, permiten situar al estudiante en su trayectoria formativa (grado, R1, R2…), facilitan la evaluación longitudinal y ayudan a establecer expectativas realistas según el nivel de formación.</p>
+  <div class="callout dark">
+    <div class="callout-title">Ejemplo · Razonamiento clínico</div>
+    <ul>
+      <li><strong>Novato:</strong> reconoce patrones básicos.</li>
+      <li><strong>Principiante avanzado:</strong> genera diagnósticos diferenciales simples.</li>
+      <li><strong>Competente:</strong> integra datos complejos.</li>
+      <li><strong>Experto:</strong> reconoce patrones sutiles y razona en contextos de incertidumbre.</li>
+    </ul>
+  </div>
+
+  <h3>¿Cuándo usar cada tipo?</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Tipo</th><th>Ventajas</th><th>Limitaciones</th><th>Uso recomendado</th></tr></thead>
+      <tbody>
+        <tr><td>Analítica</td><td>Feedback preciso por criterio. Identifica fortalezas y debilidades específicas.</td><td>Más tiempo de diseño y aplicación.</td><td>Evaluaciones sumativas de alto impacto (ECOE, competencias clave).</td></tr>
+        <tr><td>Holística</td><td>Rápida de aplicar. Captura la integración del desempeño.</td><td>Feedback menos específico.</td><td>Evaluaciones formativas durante rotaciones o cuando múltiples evaluadores califican en poco tiempo.</td></tr>
+        <tr><td>Evolutiva</td><td>Sitúa al estudiante en su trayectoria formativa.</td><td>Difícil de aplicar en un único encuentro.</td><td>Portafolios, seguimiento longitudinal en grado y residencia.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Muchas rúbricas en medicina tienen naturaleza híbrida, combinando elementos de diferentes tipos según las necesidades evaluativas. La combinación de un checklist para acciones críticas de seguridad más una rúbrica holística para la calidad del conjunto es el <strong>formato híbrido más equilibrado</strong>.</p>
+
+  <h3>De la lista de cotejo a la rúbrica holística: el caso del OSCE/ECOE</h3>
+  <p>En sus orígenes, el OSCE empleaba listas de cotejo binarias (sí/no). Las rúbricas holísticas con descriptores conductuales graduados superan a los checklists para evaluar áreas como el juicio clínico, la empatía, la organización del conocimiento y las habilidades técnicas (Alpuche-Hernandez et al., 2021).</p>
+
+  <h4>Comparación: rúbrica holística vs. analítica para habilidades diagnósticas (estación ECOE)</h4>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:24px 0;align-items:start">
+    <div>
+      <div style="background:var(--uva);color:white;padding:10px 16px;border-radius:8px 8px 0 0;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px">🔲 Rúbrica holística</div>
+      <div class="table-wrap" style="margin:0;border-radius:0 0 8px 8px">
+        <table style="min-width:0">
+          <thead><tr><th style="width:110px">Nivel</th><th>Descriptor global</th></tr></thead>
+          <tbody>
+            <tr class="level-1"><td><span class="level-badge b1">A · Deficiente</span></td><td>No identifica los elementos para establecer diagnósticos pertinentes al padecimiento actual del paciente.</td></tr>
+            <tr class="level-2"><td><span class="level-badge b2">B · Insuficiente</span></td><td>Identifica algunos elementos para establecer solo un diagnóstico presuntivo.</td></tr>
+            <tr><td><span class="level-badge b3">C · Suficiente</span></td><td>Identifica algunos elementos y establece además un diagnóstico diferencial relacionado al problema.</td></tr>
+            <tr class="level-3"><td><span class="level-badge b3">D · Bueno</span></td><td>Identifica y establece elementos para el diagnóstico diferencial; estructura un plan diagnóstico coherente.</td></tr>
+            <tr class="level-4"><td><span class="level-badge b4">E · Excelente</span></td><td>Identifica muy bien el problema y establece dos diagnósticos diferenciales priorizados y justificados con argumentos fisiopatológicos.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="background:var(--uva-pale);border:1px solid var(--uva-light);border-radius:0 0 8px 8px;padding:12px 16px;font-size:13px;color:var(--text2);line-height:1.55;margin-top:2px">
+        <strong style="color:var(--uva-dark)">↳ Una sola puntuación global.</strong> Rápida de aplicar, pero no permite identificar en qué dimensión específica falla o destaca el estudiante.
+      </div>
+    </div>
+    <div>
+      <div style="background:var(--sec);color:white;padding:10px 16px;border-radius:8px 8px 0 0;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px">🔢 Rúbrica analítica</div>
+      <div class="table-wrap" style="margin:0;border-radius:0 0 8px 8px">
+        <table style="min-width:0;font-size:12.5px">
+          <thead><tr><th style="width:130px">Criterio</th><th><span class="level-badge b1">A·0</span></th><th><span class="level-badge b2">B·1</span></th><th><span class="level-badge b3">C·2</span></th><th><span class="level-badge b3">D·3</span></th><th><span class="level-badge b4">E·4</span></th></tr></thead>
+          <tbody>
+            <tr>
+              <td>1. Identificación de elementos clínicos</td>
+              <td class="level-1">No reconoce datos que orienten al diagnóstico.</td>
+              <td class="level-2">Reconoce uno o dos datos aislados, sin integrarlos.</td>
+              <td>Reconoce los datos principales y los vincula con el problema.</td>
+              <td class="level-3">Integra datos de anamnesis, exploración y antecedentes coherentemente.</td>
+              <td class="level-4">Identifica y pondera todos los datos, distinguiendo los de mayor valor diagnóstico.</td>
+            </tr>
+            <tr>
+              <td>2. Diagnóstico presuntivo</td>
+              <td class="level-1">No formula ninguno o es incongruente con el caso.</td>
+              <td class="level-2">Diagnóstico impreciso o muy inespecífico.</td>
+              <td>Diagnóstico correcto aunque sin argumentación.</td>
+              <td class="level-3">Correcto y justificado con los hallazgos del caso.</td>
+              <td class="level-4">Preciso, jerarquizado y fundamentado con razonamiento fisiopatológico.</td>
+            </tr>
+            <tr>
+              <td>3. Diagnósticos diferenciales</td>
+              <td class="level-1">No considera diagnósticos alternativos.</td>
+              <td class="level-2">Menciona uno sin argumentación.</td>
+              <td>Plantea uno pertinente al problema del paciente.</td>
+              <td class="level-3">Plantea dos o más y los relaciona con el cuadro clínico.</td>
+              <td class="level-4">Dos o más, priorizados y distinguibles por criterios clínicos explícitos.</td>
+            </tr>
+            <tr>
+              <td>4. Argumentación fisiopatológica</td>
+              <td class="level-1">No aplica conocimiento fisiopatológico.</td>
+              <td class="level-2">Menciona conceptos descontextualizados o incorrectos.</td>
+              <td>Aplica conocimiento básico para explicar el diagnóstico presuntivo.</td>
+              <td class="level-3">Argumenta fisiopatológicamente el presuntivo y los diferenciales.</td>
+              <td class="level-4">Razonamiento sólido y preciso para jerarquizar y justificar todos los diagnósticos.</td>
+            </tr>
+            <tr>
+              <td>5. Plan diagnóstico</td>
+              <td class="level-1">No propone estudios o son inapropiados.</td>
+              <td class="level-2">Propone algún estudio sin justificarlo.</td>
+              <td>Propone estudios básicos pertinentes al diagnóstico presuntivo.</td>
+              <td class="level-3">Plan coherente para confirmar el presuntivo y descartar diferenciales.</td>
+              <td class="level-4">Plan jerarquizado, costo-efectivo, justificado y alineado a todos los diagnósticos.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="background:var(--sec-pale);border:1px solid var(--sec-light);border-radius:0 0 8px 8px;padding:12px 16px;font-size:13px;color:var(--text2);line-height:1.55;margin-top:2px">
+        <strong style="color:var(--sec)">↳ Cinco puntuaciones independientes (máx. 20 pts).</strong> Un estudiante puede ser Bueno (3) en diferenciales pero Deficiente (0) en argumentación fisiopatológica — información que la holística no captura y que es esencial para la retroalimentación formativa.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section id="puntuacion">
+  <div class="section-num">06</div>
+  <h2>¿Cómo se puntúan?</h2>
+  <div class="divider"></div>
+  <p>Las escalas más habituales son las de <strong>cuatro niveles</strong> (insuficiente / básico / competente / excelente) y las de <strong>cinco niveles</strong> (novato / principiante avanzado / competente / avanzado / experto). Con menos de tres niveles la rúbrica pierde capacidad discriminativa; con más de cinco sin descriptores distintos, genera confusión.</p>
+  <h3>Ponderación de criterios</h3>
+  <p>No todos los criterios tienen el mismo peso clínico. Esta decisión debe tomarse <mark>antes de usar la rúbrica</mark>, no durante ni después, y debe ser transparente para los estudiantes.</p>
+  <h3>Transformación a puntuación numérica</h3>
+  <p>Cada nivel de la escala recibe un valor numérico entero y consecutivo. En una escala de cuatro niveles, la correspondencia habitual es: insuficiente = 1, básico = 2, competente = 3, excelente = 4. En una escala de cinco niveles: novato = 1, principiante avanzado = 2, competente = 3, avanzado = 4, experto = 5. Algunas instituciones optan por iniciar en 0 (insuficiente = 0) cuando se desea penalizar la ausencia total de la conducta evaluada, como ocurre en contextos de evaluación de alto impacto.</p>
+  <p>La puntuación total de la rúbrica analítica se obtiene sumando, para cada criterio, el valor numérico obtenido multiplicado por su peso o ponderación. La fórmula general es:</p>
+  <div class="callout dark">
+    <div class="callout-title">Fórmula general</div>
+    <ul>
+      <li><strong>Puntuación total</strong> = Σ (valor obtenido en el criterio × peso del criterio)</li>
+      <li><strong>Nota (0–10)</strong> = (Puntuación total obtenida / Puntuación máxima posible) × 10</li>
+    </ul>
+  </div>
+  <p>Por ejemplo, en una rúbrica con cuatro criterios ponderados al 25 % cada uno y escala de 1 a 4, la puntuación máxima posible es 4. Si un estudiante obtiene una media ponderada de 3,0, su nota sería (3,0 / 4) × 10 = <strong>7,5 sobre 10</strong>.</p>
+  <p>Cuando los criterios tienen diferente peso, el cálculo sigue el mismo principio pero incorpora la ponderación antes de sumar. Así, un criterio con peso del 40 % y valor 3 sobre 4 aporta 0,40 × (3/4) × 10 = <strong>3,0 puntos</strong> a la nota final.</p>
+  <p>Es importante que la tabla de conversión esté publicada y sea accesible para los estudiantes antes de la evaluación, de modo que la relación entre el desempeño cualitativo y la calificación numérica sea completamente transparente.</p>
+  <div class="callout warning">
+    <div class="callout-title">Errores frecuentes en la puntuación</div>
+    <ul>
+      <li>Usar descriptores vagos como "adecuado" o "bueno" sin especificar qué conducta los define.</li>
+      <li>No ponderar los criterios antes de aplicar la rúbrica y tratarlos todos como equivalentes.</li>
+      <li>Diseñar escalas de más de cinco niveles sin descriptores suficientemente distintos.</li>
+      <li>No realizar calibración previa entre evaluadores en evaluaciones de alto impacto.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 07 -->
+<section id="construccion">
+  <div class="section-num">07</div>
+  <h2>Cómo construir o mejorar una rúbrica: paso a paso</h2>
+  <div class="divider"></div>
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Definir propósito y decisión</h4><p>Antes de escribir un solo criterio, responda dos preguntas: ¿para qué servirá esta rúbrica? y ¿qué decisión se tomará con sus resultados? El propósito formativo admite más flexibilidad y menos precisión psicométrica; el sumativo exige mayor rigor en los descriptores, en la calibración y en la documentación.</p></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Definir el desempeño observable y las evidencias</h4><p>¿Qué hace exactamente un estudiante competente cuando realiza esta tarea? ¿Qué se puede ver, oír o leer que demuestre ese desempeño? Las evidencias pueden ser de producto (informe, historia clínica, póster) o de proceso (cómo realiza una exploración, cómo se comunica). Es esencial observar directamente ejemplos de desempeño real antes de escribir los descriptores.</p></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Seleccionar criterios</h4><p>Los criterios deben ser pocos, críticos y no redundantes. Un criterio es crítico si su ausencia o deficiencia implica un riesgo real para el aprendizaje del estudiante o para la seguridad del paciente. Entre tres y ocho criterios suelen ser suficientes para la mayoría de las tareas clínicas.</p></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Definir niveles y descriptores conductuales</h4><p>Comience siempre por el <strong>nivel de referencia</strong>: el desempeño mínimo aceptable para el nivel de formación esperado. Desde ese punto, describa hacia arriba (qué añade el nivel superior) y hacia abajo (qué falta en el inferior). El uso de ejemplos concretos mejora notablemente la utilidad del descriptor.</p></div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-body"><h4>Revisar el lenguaje</h4><p>Un buen descriptor no contiene términos ambiguos, no usa comparativos sin referente y no mezcla en el mismo nivel conductas que corresponden a momentos distintos. El <em>test de la observabilidad</em> es útil: si no puede imaginar qué está haciendo físicamente el estudiante al leer el descriptor, reescríbalo.</p></div></div>
+    <div class="step"><div class="step-num">6</div><div class="step-body"><h4>Alinear con objetivos, competencias y contexto</h4><p>La rúbrica debe derivarse de los objetivos de aprendizaje del programa y estar alineada con los marcos de competencias vigentes (CanMEDS, ACGME, perfiles propios de la institución). Además, debe ser contextualmente válida: los descriptores de una rúbrica para estudiantes de grado no son los mismos que los de una para residentes.</p></div></div>
+    <div class="step"><div class="step-num">7</div><div class="step-body"><h4>Involucrar al estudiante</h4><p>Las rúbricas son más efectivas cuando se co-crean con los estudiantes (Cockett y Jackson, 2018; Fraile et al., 2017). Al menos, los estudiantes deben recibir la rúbrica antes de comenzar la tarea, con tiempo suficiente para discutirla. Pedir a los estudiantes que expliquen la rúbrica a un compañero antes de empezar es una estrategia de bajo coste y alto impacto.</p></div></div>
+  </div>
+  <h3>Plantilla rápida de diseño</h3>
+  <div class="callout dark">
+    <div class="callout-title">13 puntos para construir o revisar cualquier rúbrica</div>
+    <ul class="plantilla-list">
+      <li><span class="num">1</span> Nombre de la tarea</li>
+      <li><span class="num">2</span> Propósito: formativo / sumativo · Nivel de impacto: bajo / alto</li>
+      <li><span class="num">3</span> Decisión a tomar con los resultados</li>
+      <li><span class="num">4</span> Evidencias a evaluar: producto / proceso / ambos</li>
+      <li><span class="num">5</span> Criterios (3–8, críticos, no redundantes)</li>
+      <li><span class="num">6</span> Número de niveles (3 / 4 / 5) y etiquetas</li>
+      <li><span class="num">7</span> Descriptor del nivel de referencia para cada criterio</li>
+      <li><span class="num">8</span> Descriptores de los demás niveles (arriba y abajo desde el de referencia)</li>
+      <li><span class="num">9</span> Ponderación justificada de criterios</li>
+      <li><span class="num">10</span> Revisión de lenguaje: test de observabilidad</li>
+      <li><span class="num">11</span> Alineación con objetivos y marcos de competencias</li>
+      <li><span class="num">12</span> Sesión de co-diseño o revisión con estudiantes</li>
+      <li><span class="num">13</span> Pilotaje con 2–3 casos antes del uso real</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 08 -->
+<section id="calidad">
+  <div class="section-num">08</div>
+  <h2>Calidad y justicia: validez, fiabilidad y calibración</h2>
+  <div class="divider"></div>
+  <h3>Validez de contenido</h3>
+  <p>La validez de contenido se construye desde el inicio del proceso de diseño. Implica que los criterios seleccionados representen realmente las dimensiones más importantes de la competencia a medir, y que los descriptores reflejen el desempeño esperado en el nivel de formación correspondiente.</p>
+  <h3>Pilotaje</h3>
+  <p>El pilotaje es el paso que más frecuentemente se omite y que más daño hace cuando falta. Antes de usar una rúbrica en evaluaciones de impacto real, debe probarse con al menos dos o tres casos y revisarse a la luz de las dificultades encontradas.</p>
+  <h3>Calibración entre evaluadores</h3>
+  <p>El entrenamiento de evaluadores —que incluye la lectura y discusión de los descriptores, la aplicación a casos de práctica y la comparación de puntuaciones con discusión de discrepancias— es la intervención más efectiva para mejorar la fiabilidad. Los <strong>ejemplos ancla</strong> potencian este entrenamiento. La investigación muestra que el entrenamiento reduce los sesgos más frecuentes: <em>lenidad</em>, <em>severidad</em>, <em>centralidad</em> y <em>efecto halo</em>.</p>
+  <div class="callout">
+    <div class="callout-title">Checklist de calidad de la rúbrica</div>
+    <ul class="checklist">
+      <li>Los criterios están seleccionados por expertos clínicos y educativos.</li>
+      <li>Los descriptores son conductuales y observables, no adjetivos genéricos.</li>
+      <li>Todos los niveles de todos los criterios tienen descriptor propio.</li>
+      <li>La rúbrica ha sido sometida a pilotaje con casos reales o simulados.</li>
+      <li>Se ha realizado sesión de calibración con los evaluadores antes del uso real.</li>
+      <li>Los sesgos frecuentes (lenidad, halo, centralidad) se han discutido en la formación.</li>
+      <li>La ponderación de criterios está definida y justificada antes de la evaluación.</li>
+      <li>Los estudiantes reciben la rúbrica antes de la evaluación, no solo después.</li>
+      <li>La rúbrica se revisa al menos una vez al año o tras cada cohorte evaluada.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 09 -->
+<section id="ventajas">
+  <div class="section-num">09</div>
+  <h2>Ventajas y limitaciones</h2>
+  <div class="divider"></div>
+  <h3>Ventajas respaldadas por la evidencia</h3>
+  <p>La principal ventaja documentada es el <strong>incremento de la consistencia entre evaluadores</strong>. La revisión de Jonsson y Svingby (2007) concluye que la fiabilidad de la puntuación puede mejorarse con el uso de rúbricas, especialmente si son analíticas, específicas por tarea y complementadas con ejemplos ancla. La <strong>mejora de la calidad del feedback</strong> es la segunda ventaja bien documentada: los descriptores conductuales producen feedback que el estudiante puede convertir en acción concreta.</p>
+  <p>Un efecto menos explorado pero relevante es el <strong>impacto sobre el desarrollo del juicio profesional del evaluador</strong>. Trabajar con rúbricas obliga a los docentes a articular explícitamente sus estándares implícitos.</p>
+  <p>Por último, las rúbricas facilitan la <strong>integración con tecnología</strong>: al proporcionar criterios precisos y conductuales a un modelo de lenguaje, es posible crear sistemas de evaluación automatizada o semiautomatizada. Este uso se desarrolla en detalle en el <a href="#ia" style="color:var(--sec);font-weight:600;">apartado 10</a>.</p>
+  <h3>Limitaciones que no deben ignorarse</h3>
+  <p>La <em>checklistización</em> del desempeño es la limitación más frecuente: la tendencia a convertir competencias complejas y holísticas en listas de conductas discretas que, sumadas, no capturan la integridad del desempeño real. Hay también riesgos de <em>criteria compliance</em> (Torrance, 2007): cuando los estudiantes usan la rúbrica como receta de cumplimiento en lugar de herramienta de aprendizaje, pueden volverse demasiado instrumentales y perder creatividad o pensamiento profundo.</p>
+  <div class="callout warning">
+    <div class="callout-title">Otras limitaciones relevantes</div>
+    <ul>
+      <li><strong>Tiempo de elaboración:</strong> crear una rúbrica bien diseñada, validada y consensuada requiere inversión significativa de tiempo y a menudo revisiones múltiples.</li>
+      <li><strong>Rigidez potencial:</strong> pueden limitar la valoración de aspectos creativos, innovadores o contextuales que no encajan perfectamente en los criterios predefinidos.</li>
+      <li><strong>Riesgo de fragmentación:</strong> al descomponer competencias complejas en criterios específicos, se puede perder la visión holística del desempeño del estudiante.</li>
+      <li><strong>Curva de aprendizaje:</strong> los evaluadores necesitan formación y práctica para aplicar las rúbricas de forma consistente y justa.</li>
+      <li><strong>Falsa sensación de objetividad:</strong> aunque mejoran la consistencia, siempre existe un componente de juicio profesional que no puede eliminarse completamente.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 10 -->
+<section id="ia">
+  <div class="section-num">10</div>
+  <h2>Rúbricas e inteligencia artificial generativa</h2>
+  <div class="divider"></div>
+  <p>La llegada de modelos de lenguaje de gran tamaño como ChatGPT o Claude a las manos de los estudiantes de medicina ha cambiado el tipo de evidencias de desempeño que puede generar un estudiante. Trabajos escritos que antes requerían semanas de esfuerzo pueden producirse en minutos con ayuda de la IA.</p>
+  <p>Esto no significa que las rúbricas deban perseguir el uso de la IA: ese enfoque es reactivo, ineficaz y desplaza el foco desde el aprendizaje hacia la vigilancia. Significa que las rúbricas deben evolucionar para capturar <strong>aquello que la IA no puede producir de forma autónoma</strong>: el proceso de razonamiento del estudiante, la trazabilidad de sus decisiones, su capacidad de defensa oral de un argumento, su juicio clínico contextualizado en un caso real, y su reflexión auténtica sobre su propio aprendizaje (Emekli y Karahan, 2025).</p>
+  <p>Las rúbricas son también el mejor instrumento para calibrar la evaluación cuando se usan agentes de IA como co-evaluadores. <strong>Las rúbricas son, en este sentido, los prompts pedagógicos con los que el docente enseña a la IA a evaluar como él lo haría.</strong></p>
+
+  <h3>La rúbrica como lenguaje para hablar con la IA</h3>
+  <p>Ahora que comenzamos a aventurarnos a utilizar la IA generativa como un complemento a nuestra labor de evaluación, nos damos cuenta de que necesitamos darle a nuestras automatizaciones o asistentes instrucciones precisas si queremos que evalúen a nuestros alumnos como lo haríamos nosotros. La IA no evalúa lo que no puede ver y, por tanto, evaluará tan bien como nosotros le hayamos enseñado a hacerlo.</p>
+  <p>¿Y cuál es la mejor manera de comunicar a una IA cómo queremos hacer una evaluación? A través del diseño de una rúbrica: en ella le diremos qué criterios tiene que evaluar y cómo debe hacerlo, para luego construir una retroalimentación adecuada para nuestros alumnos, que esté a nuestro gusto e incluya todos los puntos que consideremos importantes.</p>
+
+  <div class="callout dark">
+    <div class="callout-title">Ejemplo · Razonamiento clínico evaluado por IA</div>
+    <ul>
+      <li><strong>Sin rúbrica:</strong> si solo le decimos a la IA que valore el razonamiento como "adecuado o no" sin más instrucciones, lo hará según criterios que desconocemos y no sabrá interpretar los matices que nosotros consideramos importantes.</li>
+      <li><strong>Con rúbrica:</strong> si le indicamos que para calificar el diagnóstico diferencial como adecuado el estudiante debe incluir al menos tres diagnósticos ordenados por probabilidad con justificación fisiopatológica de cada uno, entonces la IA tiene un criterio claro para establecer la idoneidad de la respuesta y para orientar la retroalimentación al estudiante.</li>
+    </ul>
+  </div>
+
+  <p>Por eso, cuando queramos diseñar asistentes para la evaluación basados en IA tendremos que construir rúbricas detalladas, iterar con ellas y consensuar con los compañeros del equipo docente las respuestas obtenidas, además de mantener siempre la supervisión docente sobre el proceso.</p>
+  <p>Las rúbricas son nuestros <em>prompts</em> pedagógicos para transformar a nuestro asistente basado en IA de un simple corrector gramatical a un co-evaluador que aplica nuestro criterio clínico y nuestros estándares de excelencia. <strong>La IA no reemplaza nuestro juicio experto: lo amplifica cuando le damos instrucciones claras</strong>, y nos va a permitir volver a los exámenes de desarrollo o a tareas de mayor impacto sobre la educación que los exámenes tipo test.</p>
+
+  <div class="callout warning">
+    <div class="callout-title">Qué cambiar a partir de ahora</div>
+    <ul>
+      <li>Revisar las rúbricas de trabajos escritos: si solo evalúan el producto, añadir criterios de proceso y trazabilidad.</li>
+      <li>Incluir en al menos una evaluación la defensa oral del trabajo, con criterios específicos de justificación.</li>
+      <li>Añadir un criterio de declaración de uso de IA con descriptor de uso transparente y reflexivo.</li>
+      <li>No prohibir el uso de IA sin haber rediseñado la evaluación: la prohibición sin rediseño no cambia el aprendizaje.</li>
+      <li>Mantener siempre la supervisión final del docente sobre cualquier evaluación asistida por IA.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 11 -->
+<section id="prompts">
+  <div class="section-num">11</div>
+  <h2>Instrucciones para usar IA: prompts reutilizables</h2>
+  <div class="divider"></div>
+  <p>Para obtener una rúbrica útil de un modelo de lenguaje, el docente debe aportar: el <strong>contexto</strong>, el <strong>propósito</strong>, los <strong>objetivos de aprendizaje</strong> y el <strong>tipo de evidencia</strong>. En todos los casos, el resultado debe revisarse y pilotarse antes de usarse.</p>
+  <h3>Prompt maestro (reutilizable)</h3>
+  <div class="prompt-box">
+    <span class="prompt-label">🔧 Prompt maestro · Generar rúbrica desde cero</span>
+Actúa como experto en evaluación por competencias en educación médica.
+
+Voy a pedirte que generes una rúbrica para la siguiente tarea o competencia:
+<span class="placeholder">[DESCRIBIR TAREA O COMPETENCIA]</span>
+
+Contexto: <span class="placeholder">[nivel de formación: grado/residencia]</span> en <span class="placeholder">[especialidad o asignatura]</span>.
+Propósito: <span class="placeholder">[formativo/sumativo]</span>. Nivel de impacto: <span class="placeholder">[bajo/alto]</span>.
+Evidencia a evaluar: <span class="placeholder">[producto escrito / desempeño observable / combinación]</span>.
+Objetivos de aprendizaje: <span class="placeholder">[listar]</span>.
+
+Por favor:
+1. Propón entre 3 y 6 criterios críticos, no redundantes y directamente observables.
+2. Para cada criterio, define 4 niveles con descriptores conductuales concretos.
+3. El nivel de referencia debe ser el mínimo aceptable para el nivel indicado.
+4. Propón ponderación justificada para cada criterio.
+5. Señala qué sesgos del evaluador son más probables y cómo mitigarlos.
+6. No inventes bibliografía; declara cualquier incertidumbre.</div>
+  <h3>Prompt: Mejorar descriptores existentes</h3>
+  <div class="prompt-box">
+    <span class="prompt-label">🔧 Prompt · Mejorar descriptores</span>
+Tengo esta rúbrica: <span class="placeholder">[pegar texto]</span>.
+
+Reescribe los descriptores del criterio <span class="placeholder">[nombre]</span> para que sean
+conductuales y observables, evitando adjetivos vagos.
+Mantén los cuatro niveles. No cambies los criterios.</div>
+  <h3>Prompt: Criterio de proceso en era IA</h3>
+  <div class="prompt-box">
+    <span class="prompt-label">🔧 Prompt · Criterio de proceso IA</span>
+Tengo una rúbrica para evaluar <span class="placeholder">[tipo de trabajo]</span>.
+
+Quiero añadir un criterio que capture el proceso de construcción del trabajo
+y el uso declarado y reflexivo de herramientas de IA.
+
+Propón un criterio con cuatro niveles y descriptores conductuales específicos.</div>
+  <h3>Prompt: Versión para estudiantes</h3>
+  <div class="prompt-box">
+    <span class="prompt-label">🔧 Prompt · Versión para estudiantes</span>
+Tengo esta rúbrica de evaluación para uso docente: <span class="placeholder">[pegar rúbrica]</span>.
+
+Genera una versión para entregar a los estudiantes que mantenga todos
+los criterios y niveles pero que use un lenguaje accesible, en primera persona,
+orientada a guiar su aprendizaje antes de la evaluación.</div>
+  <h3>Prompt: Ejemplos ancla para calibración</h3>
+  <div class="prompt-box">
+    <span class="prompt-label">🔧 Prompt · Ejemplos ancla</span>
+Tengo esta rúbrica: <span class="placeholder">[pegar rúbrica]</span>.
+
+Genera tres casos breves (2–3 frases cada uno) que ilustren exactamente
+el nivel 2, el nivel 3 y el nivel 4 del criterio <span class="placeholder">[nombre]</span>.
+
+Estos casos servirán como ejemplos ancla en una sesión de calibración.</div>
+</section>
+
+<!-- 12 -->
+<section id="claves">
+  <div class="section-num">12</div>
+  <h2>Puntos clave para recordar</h2>
+  <div class="divider"></div>
+  <div class="keypoints">
+    <div class="keypoint">Una rúbrica sin descriptores conductuales no es una rúbrica: es una lista de adjetivos.</div>
+    <div class="keypoint">El propósito (formativo o sumativo) debe definirse antes de diseñar la rúbrica, no después.</div>
+    <div class="keypoint">La calibración entre evaluadores es tan importante como la calidad de los descriptores.</div>
+    <div class="keypoint">Una rúbrica de OSCE sin pilotar puede generar injusticias sistemáticas sin que nadie lo detecte.</div>
+    <div class="keypoint">Los sesgos del evaluador no desaparecen con una buena rúbrica: se mitigan con formación y calibración.</div>
+    <div class="keypoint">Con la IA generativa, las rúbricas deben capturar proceso, trazabilidad y defensa oral, no solo producto.</div>
+    <div class="keypoint">Los modelos de lenguaje pueden generar rúbricas útiles con prompts precisos; el docente siempre debe revisar y pilotar el resultado.</div>
+    <div class="keypoint">Una rúbrica compartida antes de la evaluación es una herramienta de aprendizaje, no una ventaja indebida.</div>
+    <div class="keypoint">Involucrar a los estudiantes en la co-creación aumenta su comprensión y autorregulación.</div>
+    <div class="keypoint">Revisar y actualizar las rúbricas al menos una vez por cohorte es parte del ciclo de calidad de cualquier programa formativo.</div>
+  </div>
+</section>
+
+<!-- 13 — ANEXO -->
+<section id="ejemplos">
+  <div class="section-num">13</div>
+  <h2>Anexo: ejemplos prácticos</h2>
+  <div class="divider"></div>
+  <p>Los siguientes ejemplos están elaborados aplicando los principios descritos en esta guía. Son modelos construidos con fines ilustrativos y deben ser revisados y pilotados antes de su uso en evaluación real.</p>
+
+  <h3>Ejemplo 1: Presentación de caso clínico (4.º de grado)</h3>
+  <div class="table-wrap">
+    <table class="rubric-table">
+      <thead><tr><th>Criterio</th><th>Peso</th><th><span class="level-badge b1">Insuficiente (1)</span></th><th><span class="level-badge b2">Básico (2)</span></th><th><span class="level-badge b3">Competente (3)</span></th><th><span class="level-badge b4">Excelente (4)</span></th></tr></thead>
+      <tbody>
+        <tr><td>Estructura y síntesis</td><td>30%</td><td class="level-1">Carece de estructura reconocible; omite datos esenciales o los presenta desordenados.</td><td class="level-2">Presenta los datos principales pero sin síntesis; el hilo conductor es difícil de seguir.</td><td class="level-3">Estructura clara con anamnesis, exploración y plan ordenados; sintetiza los datos relevantes.</td><td class="level-4">Muy estructurada y sintética; jerarquiza con criterio clínico y anticipa las preguntas del oyente.</td></tr>
+        <tr><td>Razonamiento diagnóstico</td><td>40%</td><td class="level-1">No plantea diagnóstico diferencial o lo hace sin relación con los datos del caso.</td><td class="level-2">Plantea un diagnóstico posible pero no lo justifica ni considera alternativas.</td><td class="level-3">Diagnóstico diferencial con 2–3 opciones ordenadas por probabilidad, justifica cuál es más probable.</td><td class="level-4">Diferencial completo y priorizado, integra fisiopatología y ajusta el plan al contexto del paciente.</td></tr>
+        <tr><td>Comunicación oral</td><td>30%</td><td class="level-1">No mantiene contacto visual, lee del papel, lenguaje inapropiado.</td><td class="level-2">Comunicación funcional pero con pausas largas o falta de fluidez.</td><td class="level-3">Expresión clara, fluida y adaptada al oyente; verifica comprensión.</td><td class="level-4">Muy fluida, adapta el lenguaje al interlocutor, responde con seguridad a preguntas del evaluador.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Ejemplo 2: Técnica de vía venosa periférica (3.er curso, simulación/ECOE)</h3>
+  <div class="table-wrap">
+    <table class="rubric-table">
+      <thead><tr><th>Criterio</th><th>Peso</th><th><span class="level-badge b1">Insuficiente (1)</span></th><th><span class="level-badge b2">Básico (2)</span></th><th><span class="level-badge b3">Competente (3)</span></th><th><span class="level-badge b4">Excelente (4)</span></th></tr></thead>
+      <tbody>
+        <tr><td>Asepsia</td><td>25%</td><td class="level-1">No realiza lavado de manos ni usa guantes; no desinfecta la piel.</td><td class="level-2">Realiza lavado de manos pero no desinfecta adecuadamente; usa guantes de forma inconsistente.</td><td class="level-3">Aplica técnica aséptica correcta: lavado de manos, guantes y desinfección con técnica y tiempo adecuados.</td><td class="level-4">Técnica aséptica impecable, verbaliza los pasos críticos y corrige activamente cualquier ruptura.</td></tr>
+        <tr><td>Comunicación con el paciente</td><td>25%</td><td class="level-1">No informa al paciente del procedimiento; no pide consentimiento.</td><td class="level-2">Informa al paciente de forma muy breve sin verificar comprensión.</td><td class="level-3">Informa, solicita consentimiento, explica posibles molestias y verifica comprensión.</td><td class="level-4">Informa, escucha las preocupaciones, adapta su lenguaje y tranquiliza durante el procedimiento.</td></tr>
+        <tr><td>Técnica procedimental</td><td>35%</td><td class="level-1">No consigue canalizar o comete errores graves de técnica.</td><td class="level-2">Consigue canalizar pero con dificultades importantes en la punción o fijación.</td><td class="level-3">Procedimiento ordenado, con buena técnica de punción y fijación correcta del catéter.</td><td class="level-4">Eficiente y seguro; palpa y visualiza la vena antes de puncionar, minimiza el disconfort y documenta.</td></tr>
+        <tr><td>Manejo de incidencias</td><td>15%</td><td class="level-1">Ante un fallo, abandona o no sabe cómo proceder.</td><td class="level-2">Ante un fallo, pide ayuda sin haber intentado ninguna medida correctora.</td><td class="level-3">Identifica el problema, intenta una corrección y, si no lo resuelve, pide ayuda de forma apropiada.</td><td class="level-4">Anticipa posibles incidencias, tiene un plan alternativo y gestiona el fallo sin comprometer la seguridad.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Ejemplo 3: Comunicación de malas noticias (5.º de grado o R1)</h3>
+  <div class="table-wrap">
+    <table class="rubric-table">
+      <thead><tr><th>Criterio</th><th>Peso</th><th><span class="level-badge b1">Insuficiente (1)</span></th><th><span class="level-badge b2">Básico (2)</span></th><th><span class="level-badge b3">Competente (3)</span></th><th><span class="level-badge b4">Excelente (4)</span></th></tr></thead>
+      <tbody>
+        <tr><td>Preparación del entorno</td><td>15%</td><td class="level-1">No verifica privacidad, presencia de acompañante ni posición del paciente.</td><td class="level-2">Verifica algún elemento del entorno pero omite aspectos básicos.</td><td class="level-3">Garantiza privacidad, verifica si el paciente quiere acompañante y se sienta a su nivel.</td><td class="level-4">Prepara el entorno de forma óptima y crea un clima de confianza antes de comenzar.</td></tr>
+        <tr><td>Empatía y apoyo emocional</td><td>35%</td><td class="level-1">No reconoce la reacción emocional del paciente; continúa dando información sin pausar.</td><td class="level-2">Reconoce la emoción de forma superficial; pausa brevemente y retoma sin explorar el estado emocional.</td><td class="level-3">Valida la reacción emocional, pausa tras dar la noticia y pregunta qué necesita el paciente antes de continuar.</td><td class="level-4">Acompaña de forma experta, usa el silencio terapéutico y cierra con un plan de apoyo concreto.</td></tr>
+        <tr><td>Claridad de la información</td><td>30%</td><td class="level-1">Usa terminología técnica sin adaptación; la información es confusa o incompleta.</td><td class="level-2">Intenta adaptar el lenguaje pero la información esencial es incompleta.</td><td class="level-3">Informa de forma clara, en pequeñas dosis y verificando la comprensión del paciente.</td><td class="level-4">Estructura la información y adapta el nivel de detalle en función de la capacidad de absorción del paciente.</td></tr>
+        <tr><td>Manejo del silencio y preguntas</td><td>20%</td><td class="level-1">No tolera el silencio; interrumpe o rellena los silencios con información innecesaria.</td><td class="level-2">Tolera el silencio pero no lo usa terapéuticamente; responde las preguntas de forma incompleta.</td><td class="level-3">Respeta el silencio del paciente; responde a sus preguntas de forma honesta y adaptada.</td><td class="level-4">Usa el silencio como herramienta terapéutica y cierra con un plan de seguimiento claro.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Ejemplo 4: Trabajo académico con uso de IA generativa (6.º de grado)</h3>
+  <div class="table-wrap">
+    <table class="rubric-table">
+      <thead><tr><th>Criterio</th><th>Peso</th><th><span class="level-badge b1">Insuficiente (1)</span></th><th><span class="level-badge b2">Básico (2)</span></th><th><span class="level-badge b3">Competente (3)</span></th><th><span class="level-badge b4">Excelente (4)</span></th></tr></thead>
+      <tbody>
+        <tr><td>Planteamiento del problema</td><td>20%</td><td class="level-1">No define claramente el problema o la pregunta de investigación.</td><td class="level-2">Define el problema de forma vaga; la justificación es insuficiente.</td><td class="level-3">Define con claridad el problema, justifica su relevancia clínica y delimita el alcance del trabajo.</td><td class="level-4">Definición precisa con marco conceptual sólido y relevancia clínica bien argumentada.</td></tr>
+        <tr><td>Análisis e interpretación</td><td>30%</td><td class="level-1">No analiza los resultados o lo hace de forma superficial.</td><td class="level-2">Analiza los datos pero sin profundidad crítica; las conclusiones son poco coherentes.</td><td class="level-3">Analiza con sentido crítico, discute limitaciones y extrae conclusiones coherentes.</td><td class="level-4">Análisis riguroso; integra las limitaciones en las conclusiones y propone implicaciones prácticas concretas.</td></tr>
+        <tr><td>Uso reflexivo de IA</td><td>25%</td><td class="level-1">No declara el uso de IA o lo hace de forma que sugiere que no ha revisado el contenido generado.</td><td class="level-2">Declara que usó IA pero sin especificar para qué ni cómo verificó los resultados.</td><td class="level-3">Declara qué herramientas de IA utilizó, para qué partes y cómo verificó los resultados generados.</td><td class="level-4">Declara el uso con detalle, reflexiona críticamente sobre sus limitaciones y demuestra comprensión autónoma en la defensa.</td></tr>
+        <tr><td>Defensa oral</td><td>25%</td><td class="level-1">No es capaz de explicar el contenido de su trabajo; no responde a las preguntas del evaluador.</td><td class="level-2">Responde a algunas preguntas pero con dificultad para argumentar más allá de lo escrito.</td><td class="level-3">Defiende con claridad los argumentos, responde con seguridad y reconoce las limitaciones.</td><td class="level-4">Defensa experta: adapta argumentos, reconoce la incertidumbre y demuestra que el trabajo es auténticamente suyo.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 14 -->
+<section id="refs">
+  <div class="section-num">14</div>
+  <h2>Referencias</h2>
+  <div class="divider"></div>
+  <ul class="ref-list">
+    <li>Alpuche-Hernandez A, Trejo-Mejía JA, Peña-Balderas J, Ortiz-Montalvo A. Diseño y elaboración de rúbricas para evaluar competencias de estudiantes de medicina en un Examen Clínico Objetivo Estructurado. <em>Psicología Educativa.</em> 2021;8-9(1):58-64.</li>
+    <li>Carless D, Boud D. The development of student feedback literacy: enabling uptake of feedback. <em>Assessment &amp; Evaluation in Higher Education.</em> 2018;43(8):1315-1325.</li>
+    <li>Chiavaroli NG, Pearce J. Twelve tips for developing effective marking schemes for constructed-response examination questions. <em>Med Teach.</em> 2024 Oct;46(10):1284-1290.</li>
+    <li>Cockett A, Jackson C. The use of assessment rubrics to enhance feedback in higher education: An integrative literature review. <em>Nurse Education Today.</em> 2018;69:8-13.</li>
+    <li>Colbert-Getz JM, Ryan M, Hennessey E, et al. Measuring assessment quality with an assessment utility rubric for medical education. <em>MedEdPORTAL.</em> 2017;13:10588.</li>
+    <li>Emekli E, Karahan BN. Comparison of automatic item generation methods in the assessment of clinical reasoning skills. <em>Revista Española de Educación Médica.</em> 2025;1:637221.</li>
+    <li>Fraile J, Panadero E, Pardo R. Co-creating rubrics: The effects on self-regulated learning, self-efficacy and performance of establishing assessment criteria with students. <em>Studies in Educational Evaluation.</em> 2017;53:69-76.</li>
+    <li>Jonsson A, Svingby G. The use of scoring rubrics: Reliability, validity and educational consequences. <em>Educational Research Review.</em> 2007;2(2):130-144.</li>
+    <li>Kıyak YS, Emekli E. A Prompt for Generating Script Concordance Test Using ChatGPT, Claude, and Llama Large Language Model Chatbots. <em>Revista Española de Educación Médica.</em> 2024;5(3).</li>
+    <li>Norcini J, Anderson B, Bollela V, et al. Criteria for good assessment: consensus statement and recommendations from the Ottawa 2010 Conference. <em>Medical Teacher.</em> 2011;33(3):206-214.</li>
+    <li>Pangaro L, ten Cate O. Frameworks for learner assessment in medicine: AMEE Guide No. 78. <em>Medical Teacher.</em> 2013;35(6):e1197-e1210.</li>
+    <li>Pitt E, Winstone N. Enabling and valuing feedback literacies. <em>Assessment &amp; Evaluation in Higher Education.</em> 2023;48(2):149-157.</li>
+    <li>SEFSE-AREDA. Rúbrica para evaluar las rotaciones de los residentes. 2024.</li>
+    <li>Shumway JM, Harden RM. AMEE Guide No. 25: The assessment of learning outcomes for the competent and reflective physician. <em>Medical Teacher.</em> 2003;25(6):569-584.</li>
+    <li>Torrance H. Assessment as learning? How the use of explicit learning objectives, assessment criteria and feedback in post-secondary education and training can come to dominate learning. <em>Assessment in Education.</em> 2007;14(3):281-294.</li>
+    <li>Tutor AS, Escudero E, Del Nogal Ávila M, et al. Learning and assessment strategies to develop specific and transversal competencies for a humanized medical education. <em>Front Physiol.</em> 2023 Jul 10;14:1212031.</li>
+  </ul>
+</section>
+
+<div class="back-top"><a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">↑ Volver al inicio</a></div>
+
+<div style="margin:40px 0 0;padding:28px 32px;background:var(--gray1);border-left:4px solid var(--gray3);border-radius:0 10px 10px 0">
+  <p style="font-size:12px;text-transform:uppercase;letter-spacing:1.5px;color:var(--gray3);font-weight:700;margin-bottom:10px">Declaración de uso responsable de la IA</p>
+  <p style="font-size:14px;color:var(--text2);margin:0;line-height:1.7">Durante la redacción del material incluido en esta página se utilizó <strong>Claude Sonnet 4.6</strong> para asistir en la revisión de la bibliografía y en la redacción del texto. La página ha sido construida como un Artefacto con Claude Sonnet 4.6. Todo el material fue revisado por los autores.</p>
+</div>
+</div>
+
+<footer>
+  <strong>Universidad de Valladolid · Facultad de Medicina</strong><br>
+  Guía práctica para docentes clínicos y tutores · Evaluación por competencias<br>
+  Basada en evidencia científica actualizada · Incluye prompts para IA generativa<br><br>
+  <span style="color:rgba(255,255,255,0.8);font-size:12.5px;">Parte del proyecto de innovación docente</span><br>
+  <span style="color:white;font-weight:600;font-size:12.5px;">EDUMed EvalUVa 4.0 · Inteligencia artificial para transformar la evaluación docente en educación médica (2025–2026)</span><br><br>
+  <span style="opacity:0.5;font-size:12px;">Material educativo de uso interno · Febrero 2026</span>
+</footer>
+
+</body>
+</html>
