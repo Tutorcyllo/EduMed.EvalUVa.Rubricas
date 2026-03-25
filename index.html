@@ -47,7 +47,7 @@ header{background:var(--yellow);border-bottom:2px solid var(--yellow-deep);posit
 .hero-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:28px}
 .hero-text{flex:1;min-width:0}
 .hero-img-wrap{flex-shrink:0}
-.hero-img{max-height:160px;width:auto;max-width:260px;object-fit:contain;border-radius:12px;filter:drop-shadow(0 4px 16px rgba(0,0,0,0.18))}
+.hero-img{width:260px;height:auto;object-fit:contain;border-radius:12px;filter:drop-shadow(0 4px 16px rgba(0,0,0,0.18))}
 .hero-headline{font-size:1.6rem;font-weight:800;color:var(--gray-900);line-height:1.15;letter-spacing:-0.5px;margin-bottom:6px}
 .hero-sub{font-size:0.875rem;color:var(--gray-700);font-weight:500;margin-bottom:16px;max-width:640px}
 .hero-stats{display:flex;gap:8px;flex-wrap:wrap}
@@ -224,7 +224,7 @@ footer strong{color:var(--yellow-deep)}
 <div class="tabs-wrap">
   <div class="tabs" id="tabBar">
     <button class="tab active" data-tab="intro">Intro</button>
-    <button class="tab" data-tab="que-es">¿Qué es?</button>
+    <button class="tab" data-tab="que-es">¿Qué son?</button>
     <button class="tab" data-tab="sistema">En el sistema</button>
     <button class="tab" data-tab="para-que">Aporte</button>
     <button class="tab" data-tab="competencias">Competencias</button>
@@ -267,20 +267,22 @@ footer strong{color:var(--yellow-deep)}
     </div>
   </div>
   <div class="valid-grid">
-    <div class="valid-item"><div class="valid-icon">🎯</div><div class="valid-title">Criterios</div><div class="valid-desc">Las dimensiones del desempeño a evaluar: asepsia, comunicación, razonamiento diagnóstico. <em>El qué.</em></div></div>
-    <div class="valid-item"><div class="valid-icon">📊</div><div class="valid-title">Niveles</div><div class="valid-desc">Los grados de calidad posibles para cada criterio, habitualmente entre tres y cinco, desde insuficiente hasta excelente. <em>El cuánto.</em></div></div>
-    <div class="valid-item"><div class="valid-icon">🔍</div><div class="valid-title">Descriptores conductuales</div><div class="valid-desc">Las frases concretas que definen qué aspecto tiene el desempeño en cada nivel. Son el núcleo diferencial. <em>El cómo se ve.</em></div></div>
+    <div class="valid-item"><div class="valid-icon">🎯</div><div class="valid-title">Criterios</div><div class="valid-desc">Las dimensiones del desempeño a evaluar: asepsia, comunicación, razonamiento diagnóstico.</div><div style="margin-top:8px;display:inline-block;background:var(--gray-900);color:var(--yellow);font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:100px">El qué</div></div>
+    <div class="valid-item"><div class="valid-icon">📊</div><div class="valid-title">Niveles</div><div class="valid-desc">Los grados de calidad posibles para cada criterio, habitualmente entre tres y cinco, desde insuficiente hasta excelente.</div><div style="margin-top:8px;display:inline-block;background:var(--gray-900);color:var(--yellow);font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:100px">El cuánto</div></div>
+    <div class="valid-item"><div class="valid-icon">🔍</div><div class="valid-title">Descriptores conductuales</div><div class="valid-desc">Las frases concretas que definen qué aspecto tiene el desempeño en cada nivel. Son el núcleo diferencial.</div><div style="margin-top:8px;display:inline-block;background:var(--gray-900);color:var(--yellow);font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:100px">El cómo se ve</div></div>
   </div>
   <div class="card">
     <div class="card-title">Ejemplo de contraste</div>
     <div class="card-body">
       <div class="callout yellow">
-        <div class="callout-title">✔ Observable y accionable</div>
+        <div class="callout-title">✔ Descriptor que funciona</div>
         "Aplica técnica aséptica con lavado de manos, guantes y desinfección de la piel del paciente con tiempo y técnica adecuados."
+        <p style="margin-top:8px;font-size:0.82rem;color:var(--gray-700);line-height:1.6">¿Por qué funciona? Porque cualquier evaluador puede <strong>observar directamente</strong> si el estudiante lava las manos, usa guantes y desinfecta la piel. No hay margen para la interpretación subjetiva: o lo hace o no lo hace, y si lo hace, se puede valorar si el tiempo y la técnica son los adecuados. El descriptor ancla la evaluación en conductas concretas y visibles.</p>
       </div>
       <div class="callout" style="margin-top:10px">
-        <div class="callout-title">✗ Inútil para la evaluación</div>
+        <div class="callout-title">✗ Descriptor que no funciona</div>
         "Demuestra competencia adecuada."
+        <p style="margin-top:8px;font-size:0.82rem;color:var(--gray-700);line-height:1.6">¿Por qué no funciona? Porque <strong>no describe ninguna conducta observable</strong>. ¿Qué significa "competencia adecuada"? ¿Adecuada para quién, en qué contexto, según qué criterio? Dos evaluadores distintos pueden aplicar este descriptor de forma completamente diferente al mismo estudiante, lo que hace la evaluación injusta e indefendible.</p>
       </div>
       <div class="callout dark" style="margin-top:14px">
         <div class="callout-title">En la práctica</div>
@@ -311,7 +313,7 @@ footer strong{color:var(--yellow-deep)}
   <div class="card">
     <div class="card-title">🏥 Rúbricas en el OSCE/ECOE</div>
     <div class="card-body">
-      <p>Sin rúbricas bien construidas y calibradas, la estandarización del OSCE es solo aparente.</p>
+      <p>La importancia de las rúbricas en la ECOE es vital. Sin rúbricas bien construidas y calibradas, la estandarización de la ECOE sería solo aparente ya que cada evaluador actuaría según su criterio, aplicando estándares distintos a los mismos estudiantes y generando diferencias de calificación que no reflejan diferencias reales de desempeño.</p>
       <div class="callout dark">
         <div class="callout-title">En la práctica</div>
         <ul>
@@ -496,7 +498,7 @@ footer strong{color:var(--yellow-deep)}
   <div class="card">
     <div class="card-title">06 · ¿Cómo se puntúan?</div>
     <div class="card-body">
-      <p>Las escalas más habituales son las de <strong>cuatro niveles</strong> (insuficiente / básico / competente / excelente) y las de <strong>cinco niveles</strong> (novato / principiante avanzado / competente / avanzado / experto). Con menos de tres niveles la rúbrica pierde capacidad discriminativa; con más de cinco sin descriptores distintos, genera confusión.</p>
+      <p>Las escalas más habituales son las de <strong>cuatro niveles</strong> (ejemplo: insuficiente / básico / competente / excelente) y las de <strong>cinco niveles</strong> (ejemplo: novato / principiante avanzado / competente / avanzado / experto). Con menos de tres niveles la rúbrica pierde capacidad discriminativa; con más de cinco sin descriptores suficientemente distintos, genera confusión y hace que los evaluadores tiendan a colapsar niveles adyacentes.</p>
       <h3>Ponderación de criterios</h3>
       <p>No todos los criterios tienen el mismo peso clínico. Esta decisión debe tomarse <strong>antes de usar la rúbrica</strong>, no durante ni después, y debe ser transparente para los estudiantes.</p>
       <h3>Fórmula general</h3>
