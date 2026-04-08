@@ -421,15 +421,43 @@ footer strong{color:var(--yellow-deep)}
   <div class="card">
     <div class="card-title">05 · Tipos de rúbricas</div>
     <div class="card-body">
-      <h3>Rúbricas analíticas</h3>
-      <p>Evalúan cada componente por separado. Son las más utilizadas en medicina porque permiten identificar con precisión fortalezas y debilidades específicas y facilitan la retroalimentación detallada.</p>
-      <div class="callout dark"><div class="callout-title">Ejemplo · Historia clínica</div><ul><li>Se puntúa por separado: obtención de datos, organización temporal, identificación de síntomas clave, comunicación con el paciente y documentación.</li></ul></div>
-      <h3>Rúbricas holísticas</h3>
-      <p>Proporcionan una valoración general sin desglosar componentes. Más rápidas de aplicar, pero con feedback menos específico. Útiles para evaluaciones formativas rápidas.</p>
-      <div class="callout dark"><div class="callout-title">Ejemplo · Presentación de caso clínico</div><ul><li>Se da una puntuación global considerando: contenido, estructura, claridad y capacidad de respuesta.</li></ul></div>
-      <h3>Rúbricas evolutivas</h3>
-      <p>Describen trayectorias de desarrollo a lo largo del tiempo. Ideales para portafolios y seguimiento longitudinal en grado y residencia.</p>
-      <div class="callout dark"><div class="callout-title">Ejemplo · Razonamiento clínico</div><ul><li><strong>Novato:</strong> reconoce patrones básicos.</li><li><strong>Principiante avanzado:</strong> genera diagnósticos diferenciales simples.</li><li><strong>Competente:</strong> integra datos complejos.</li><li><strong>Experto:</strong> reconoce patrones sutiles y razona en contextos de incertidumbre.</li></ul></div>
+      <!-- Pestañas tipo carpeta -->
+      <div style="margin-top:8px">
+        <div style="display:flex;gap:0;border-bottom:2px solid var(--gray-200)" id="tipoTabBar">
+          <button onclick="switchTipo('analitica')" id="tab-analitica"
+            style="font-family:'Figtree',sans-serif;font-size:0.82rem;font-weight:700;padding:10px 20px;border:1.5px solid var(--gray-200);border-bottom:none;border-radius:8px 8px 0 0;cursor:pointer;background:var(--yellow);color:var(--gray-900);margin-right:4px;position:relative;bottom:-2px;transition:all 0.15s">
+            🔢 Analítica
+          </button>
+          <button onclick="switchTipo('holistica')" id="tab-holistica"
+            style="font-family:'Figtree',sans-serif;font-size:0.82rem;font-weight:700;padding:10px 20px;border:1.5px solid var(--gray-200);border-bottom:none;border-radius:8px 8px 0 0;cursor:pointer;background:var(--gray-100);color:var(--gray-500);margin-right:4px;position:relative;bottom:-2px;transition:all 0.15s">
+            🔲 Holística
+          </button>
+          <button onclick="switchTipo('evolutiva')" id="tab-evolutiva"
+            style="font-family:'Figtree',sans-serif;font-size:0.82rem;font-weight:700;padding:10px 20px;border:1.5px solid var(--gray-200);border-bottom:none;border-radius:8px 8px 0 0;cursor:pointer;background:var(--gray-100);color:var(--gray-500);position:relative;bottom:-2px;transition:all 0.15s">
+            📈 Evolutiva
+          </button>
+        </div>
+        <div style="border:1.5px solid var(--gray-200);border-top:none;border-radius:0 8px 8px 8px;padding:20px;background:var(--white)">
+          <!-- Panel analítica -->
+          <div id="tipo-analitica">
+            <p>Evalúan cada componente por separado, proporcionando una puntuación individual para cada criterio. Son las más utilizadas en medicina porque permiten identificar con precisión fortalezas y debilidades específicas y facilitan la retroalimentación detallada.</p>
+            <div class="callout dark" style="margin-top:14px"><div class="callout-title">Ejemplo · Historia clínica</div><ul><li>Se puntúa por separado: obtención de datos, organización temporal, identificación de síntomas clave, comunicación con el paciente y documentación.</li></ul></div>
+            <div class="callout yellow" style="margin-top:10px"><div class="callout-title">Cuándo usarla</div><ul><li>Evaluaciones sumativas de alto impacto (ECOE, competencias clave).</li><li>Cuando el feedback detallado por dimensión es esencial para el plan de mejora del estudiante.</li></ul></div>
+          </div>
+          <!-- Panel holística -->
+          <div id="tipo-holistica" style="display:none">
+            <p>Proporcionan una valoración general del desempeño sin desglosar componentes individuales. Utilizan descriptores que caracterizan diferentes niveles de logro global. Más rápidas de aplicar, pero con feedback menos específico.</p>
+            <div class="callout dark" style="margin-top:14px"><div class="callout-title">Ejemplo · Presentación de caso clínico</div><ul><li>Se da una puntuación global considerando el conjunto: contenido, estructura, claridad y capacidad de respuesta.</li></ul></div>
+            <div class="callout yellow" style="margin-top:10px"><div class="callout-title">Cuándo usarla</div><ul><li>Evaluaciones formativas durante rotaciones.</li><li>Cuando múltiples evaluadores califican en poco tiempo y se prioriza la captura del desempeño integrado.</li></ul></div>
+          </div>
+          <!-- Panel evolutiva -->
+          <div id="tipo-evolutiva" style="display:none">
+            <p>Se centran en las etapas o hitos en la progresión hacia la competencia, describiendo trayectorias de desarrollo a lo largo del tiempo. Especialmente útiles en formación médica porque reflejan el proceso natural de aprendizaje progresivo y permiten situar al estudiante en su trayectoria formativa.</p>
+            <div class="callout dark" style="margin-top:14px"><div class="callout-title">Ejemplo · Razonamiento clínico</div><ul><li><strong>Novato:</strong> reconoce patrones básicos.</li><li><strong>Principiante avanzado:</strong> genera diagnósticos diferenciales simples.</li><li><strong>Competente:</strong> integra datos complejos.</li><li><strong>Experto:</strong> reconoce patrones sutiles y razona en contextos de incertidumbre.</li></ul></div>
+            <div class="callout yellow" style="margin-top:10px"><div class="callout-title">Cuándo usarla</div><ul><li>Portafolios y seguimiento longitudinal en grado y residencia.</li><li>Cuando se quiere situar al estudiante en su trayectoria formativa (grado, R1, R2…).</li></ul></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="card">
@@ -896,6 +924,16 @@ una sesión de calibración.</div>
 <button class="back-top" id="backTop" title="Volver al inicio">↑</button>
 
 <script>
+  // Pestañas tipos de rúbrica
+  function switchTipo(id) {
+    ['analitica','holistica','evolutiva'].forEach(t => {
+      document.getElementById('tipo-' + t).style.display = t === id ? 'block' : 'none';
+      const btn = document.getElementById('tab-' + t);
+      btn.style.background = t === id ? 'var(--yellow)' : 'var(--gray-100)';
+      btn.style.color = t === id ? 'var(--gray-900)' : 'var(--gray-500)';
+    });
+  }
+
   // Tabs
   const tabs = document.querySelectorAll('.tab');
   const panels = document.querySelectorAll('.panel');
