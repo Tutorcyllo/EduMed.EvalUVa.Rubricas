@@ -212,7 +212,7 @@ footer strong{color:var(--yellow-deep)}
         <span class="stat-pill">Evaluación por competencias</span>
       </div>
     </div>
-    <div class="hero-img-wrap">
+    <div class="hero-img-wrap" style="flex-shrink:0;display:flex">
       <img class="hero-img"
            src="https://raw.githubusercontent.com/Tutorcyllo/EduMed.EvalUVa.Rubricas/main/img/medicina_innova2026.png"
            alt="EduMed Innova 2026"
@@ -934,6 +934,14 @@ una sesión de calibración.</div>
       btn.style.color = t === id ? 'var(--gray-900)' : 'var(--gray-500)';
     });
   }
+
+  // Ocultar imagen hero en móvil
+  const heroImgWrap = document.querySelector('.hero-img-wrap');
+  function checkHeroImg() {
+    if (heroImgWrap) heroImgWrap.style.display = window.innerWidth < 768 ? 'none' : 'flex';
+  }
+  checkHeroImg();
+  window.addEventListener('resize', checkHeroImg);
 
   // Tabs
   const tabs = document.querySelectorAll('.tab');
